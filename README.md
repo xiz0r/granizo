@@ -17,7 +17,7 @@ La única forma de saber cuánto rinde el motor con pronósticos reales (y no co
 
 ## Ahora: rayos, lluvia y radar
 
-El workflow [`nowcast.yml`](.github/workflows/nowcast.yml) corre cada 10 minutos y publica `latest.json` en la rama `nowcast` (un solo commit que se reemplaza), para que la app estática lo lea de `https://raw.githubusercontent.com/<dueño>/granizo/nowcast/latest.json`. Junta lo que está pasando en Uruguay y ~80 km alrededor:
+El workflow [`nowcast.yml`](.github/workflows/nowcast.yml) corre cada 10 minutos y publica `latest.json` en la rama `nowcast` (un solo commit que se reemplaza); la app lo lee de `https://raw.githubusercontent.com/<dueño>/granizo/nowcast/latest.json` (`NOWCAST.url` en `src/engine/config.ts`). Con él muestra el aviso **"Tormenta eléctrica cerca: cubrilo ahora"** cuando el motor ve ambiente de granizo y hay 3 rayos o más a menos de 20 km en la última media hora (calibración en [`scripts/research/nowcast/`](scripts/research/nowcast/) y en [`docs/como-lo-probamos.md`](docs/como-lo-probamos.md)). Junta lo que está pasando en Uruguay y ~80 km alrededor:
 
 - **Rayos** del GOES-19 (GLM) en los últimos 30 min: por celda de 0,1° en tramos de 10 min y, por ciudad, a ≤ 30 y ≤ 50 km, con el "lightning jump".
 - **Lluvia estimada por satélite** (NOAA RRQPE): máximo en mm/h por celda y por ciudad. No es radar: ve los núcleos de tormenta, no la lluvia débil.
@@ -65,6 +65,7 @@ npm run typecheck
 5. **Dos modelos**: protect solo si GFS **y** ECMWF dicen protect; watch si alguno dice protect o los dos dicen al menos watch.
 6. **Confianza**: baja en oct–mar (en el test el ambiente no distinguió granizo de lluvia en verano); en abr–sep, media si los modelos coinciden y baja si no.
 7. **Razones y textos** desde plantillas (`src/engine/messages.ts`). Los nombres visibles de los niveles están a definir en diseño.
+8. **Ahora**: con los rayos del GOES-19 de la última media hora (`src/nowcast.ts`), si el nivel es "Algunas chances" o más y hay 3 rayos o más a ≤ 20 km, la app avisa "cubrilo ahora".
 
 Habilidad estimada **fuera de muestra** (2025–2026, en días de tormenta): "Chances reales" detecta el **43%** de las granizadas con **15%** de falsas alarmas (57% y 19% en abr–sep; nada en oct–mar). "Algunas chances" o más detecta el 82% con 38% de falsas alarmas (con el umbral anterior, 93% y 65%). Son datos casi de análisis: el pronóstico real del día anterior va a rendir algo menos. Detalle en [`docs/como-lo-probamos.md`](docs/como-lo-probamos.md).
 

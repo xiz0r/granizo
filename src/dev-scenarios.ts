@@ -4,6 +4,7 @@
 import { assessPointHour, assessWindow, combineModels } from './engine/classify.ts';
 import { SENSITIVITIES, SENSITIVITY_RULES, type Sensitivity, type SensitivityRules } from './engine/config.ts';
 import type { Ingredients, WindowAssessment } from './engine/types.ts';
+import type { Nowcast } from './nowcast.ts';
 import { presentAll, presentAllLangs, type Lang, type ResultView } from './presenter.ts';
 import { WINDOW_LABELS } from './windows.ts';
 
@@ -43,8 +44,12 @@ const hourAt = (start: string, plus: number) => new Date(Date.parse(`${start}:00
 
 const range = (a: number, b: number, env: Env) => Object.fromEntries(Array.from({ length: b - a + 1 }, (_, k) => [a + k, env]));
 
-/** `start`: la hora de la consulta; `pattern`: ambiente por hora desde ahí (índice). */
-type Scenario = { models: { model: string; pattern: Record<number, Env> }[]; start: string };
+/** `start`: la hora de la consulta; `pattern`: ambiente por hora desde ahí (índice); `nowcast`: rayos cerca ("Ahora"). */
+type Scenario = { models: { model: string; pattern: Record<number, Env> }[]; start: string; nowcast?: Nowcast };
+
+const lightning = (nearestKm: number, flashes: number, ageMin: number): Nowcast => ({
+  ageMin, flashes, flashesLast10: flashes, nearestKm, rainMaxMmH: null, radar: [],
+});
 
 const SCENARIOS: Record<string, () => Scenario> = {
   tranquilo: () => ({ start: '2026-07-15T20', models: [{ model: 'GFS', pattern: {} }, { model: 'ECMWF', pattern: {} }] }),
@@ -86,6 +91,17 @@ const SCENARIOS: Record<string, () => Scenario> = {
     ],
   }),
   un_modelo: () => ({ start: '2026-08-20T08', models: [{ model: 'GFS', pattern: range(7, 9, 'watch') }] }),
+  // Ambiente de granizo y rayos a 8 km: el aviso de cubrir el auto ya.
+  ahora_rayos: () => ({
+    start: '2026-09-09T20',
+    models: [
+      { model: 'GFS', pattern: range(0, 3, 'strong') },
+      { model: 'ECMWF', pattern: range(0, 2, 'strong') },
+    ],
+    nowcast: lightning(8, 46, 12),
+  }),
+  // Rayos a 30 km sin ambiente de granizo: solo se informa.
+  rayos_lejos: () => ({ ...SCENARIOS.tormenta(), nowcast: lightning(30, 12, 15) }),
 };
 
 export const DEV_SCENARIOS = Object.keys(SCENARIOS);
@@ -99,17 +115,17 @@ function scenarioInputs(name: string) {
     }),
   ) as Record<Sensitivity, WindowAssessment>;
   const window = { name: 'next24h', label: WINDOW_LABELS.next24h, from: hourAt(s.start, 0), to: hourAt(s.start, HOURS - 1) };
-  return { bySensitivity, window, generatedAt: `${s.start}:40` };
+  return { bySensitivity, window, generatedAt: `${s.start}:40`, nowcast: s.nowcast ?? null };
 }
 
 /** El escenario con cada grado de alerta, en un idioma. Se consulta a los 40 minutos de `start`. */
 export function devScenario(name: string, lang: Lang = 'es'): Record<Sensitivity, ResultView> {
-  const { bySensitivity, window, generatedAt } = scenarioInputs(name);
-  return presentAll(bySensitivity, window, generatedAt, lang);
+  const { bySensitivity, window, generatedAt, nowcast } = scenarioInputs(name);
+  return presentAll(bySensitivity, window, generatedAt, lang, nowcast);
 }
 
 /** Igual que lo devuelve assessHere: en todos los idiomas. */
 export function devScenarioAll(name: string): Record<Lang, Record<Sensitivity, ResultView>> {
-  const { bySensitivity, window, generatedAt } = scenarioInputs(name);
-  return presentAllLangs(bySensitivity, window, generatedAt);
+  const { bySensitivity, window, generatedAt, nowcast } = scenarioInputs(name);
+  return presentAllLangs(bySensitivity, window, generatedAt, nowcast);
 }

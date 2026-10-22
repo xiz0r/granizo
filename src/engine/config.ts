@@ -122,6 +122,34 @@ export const HIGH_FREEZING_LEVEL_M_AGL = 4500;
  */
 export const WARM_SEASON_MONTHS = [10, 11, 12, 1, 2, 3];
 
+/**
+ * Aviso "Ahora": el motor ve ambiente de granizo para hoy Y hay una tormenta eléctrica activa cerca (rayos del GOES-19,
+ * del JSON que publica .github/workflows/nowcast.yml cada 10 minutos).
+ *
+ * Calibrado con los 76 casos con hora (13 granizadas, 63 tormentas sin granizo) usando solo los rayos de ANTES del
+ * granizo, con los datos 10–20 minutos viejos como llegan a la app (scripts/research/nowcast/). Con datos de hace 20 min:
+ *
+ *                                                   detecta   falsas alarmas
+ *   motor "Algunas chances" o más, solo              10/13       20/63 (32%)
+ *   motor "Chances reales", solo                      6/13        6/63 (10%)
+ *   Algunas chances o más + ≥ 3 rayos a ≤ 20 km        8/13        7/63 (11%)   ← el aviso
+ *
+ * Saltó entre 21 y 87 minutos antes del granizo (mediana ~50). Validación cruzada dejando una fecha afuera: 54–62% de
+ * detección y 13–16% de falsas alarmas según la demora de los datos. Radio y cantidad se eligieron mirando estos mismos
+ * casos (son pocos): tomarlos como provisorios hasta medirlos hacia adelante.
+ */
+export const NOWCAST = {
+  radiusKm: 20,
+  minFlashes: 3,
+  minLevel: 'watch' as 'watch' | 'protect',
+  /** Más viejos que esto (minutos desde el último rayo que cubren), los datos no se usan. */
+  maxAgeMin: 45,
+  /** Hasta dónde se informa "tormenta eléctrica a X km", sin aviso. */
+  lookKm: 50,
+  /** Dónde lo publica el workflow (rama `nowcast` del repo). En un fork, cambiar el dueño. */
+  url: 'https://raw.githubusercontent.com/PabloManzoni/granizo/nowcast/latest.json',
+};
+
 /** Zona alrededor del punto (ver analisis-motor.md: el SPC usa ~40 km). */
 export const NEIGHBORHOOD = {
   radiusKm: 40,

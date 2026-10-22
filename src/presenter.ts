@@ -10,6 +10,7 @@ import {
   type Sensitivity,
 } from './engine/config.ts';
 import type { RiskLevel, WindowAssessment } from './engine/types.ts';
+import { nowcastAlert, type Nowcast } from './nowcast.ts';
 import { LANGS, TEXT, type Lang } from './presenter-text.ts';
 
 export { LANGS, type Lang } from './presenter-text.ts';
@@ -90,6 +91,11 @@ export interface ResultView {
   generatedAt: string;
   engineVersion: string;
   disclaimer: string;
+  /**
+   * "Ahora", con los rayos del GOES-19 (null sin datos recientes o sin rayos a ≤ NOWCAST.lookKm): `alert` = el motor ve
+   * ambiente de granizo y hay una tormenta eléctrica activa cerca → cubrir el auto ya.
+   */
+  now: { alert: boolean; strong: string; text: string } | null;
 }
 
 const fmtIn = (locale: string) => (x: number | null, digits = 0, unit = '') =>
@@ -168,9 +174,10 @@ export function presentAll(
   window: WindowInfo,
   generatedAt: string,
   lang: Lang = 'es',
+  nowcast: Nowcast | null = null,
 ): Record<Sensitivity, ResultView> {
   return Object.fromEntries(
-    SENSITIVITIES.map((s) => [s, present(bySensitivity[s], window, generatedAt, s, bySensitivity, lang)]),
+    SENSITIVITIES.map((s) => [s, present(bySensitivity[s], window, generatedAt, s, bySensitivity, lang, nowcast)]),
   ) as Record<Sensitivity, ResultView>;
 }
 
@@ -179,8 +186,9 @@ export function presentAllLangs(
   bySensitivity: Record<Sensitivity, WindowAssessment>,
   window: WindowInfo,
   generatedAt: string,
+  nowcast: Nowcast | null = null,
 ): Record<Lang, Record<Sensitivity, ResultView>> {
-  return Object.fromEntries(LANGS.map((l) => [l, presentAll(bySensitivity, window, generatedAt, l)])) as Record<Lang, Record<Sensitivity, ResultView>>;
+  return Object.fromEntries(LANGS.map((l) => [l, presentAll(bySensitivity, window, generatedAt, l, nowcast)])) as Record<Lang, Record<Sensitivity, ResultView>>;
 }
 
 export function present(
@@ -190,6 +198,7 @@ export function present(
   sensitivity: Sensitivity = DEFAULT_SENSITIVITY,
   bySensitivity?: Partial<Record<Sensitivity, WindowAssessment>>,
   lang: Lang = 'es',
+  nowcast: Nowcast | null = null,
 ): ResultView {
   const t = TEXT[lang];
   const fmt = fmtIn(t.locale);
@@ -331,5 +340,13 @@ export function present(
     generatedAt,
     engineVersion: r.engineVersion,
     disclaimer: t.disclaimer,
+    now: nowView(lang, nowcast ?? null, r.level),
   };
+}
+
+function nowView(lang: Lang, n: Nowcast | null, level: RiskLevel): ResultView['now'] {
+  if (!n || n.nearestKm === null) return null;
+  const t = TEXT[lang].nowcast;
+  if (nowcastAlert(n, level)) return { alert: true, strong: t.alertStrong, text: t.alert(n.nearestKm, n.ageMin) };
+  return { alert: false, strong: t.nearStrong, text: t.near(n.nearestKm, n.ageMin) };
 }

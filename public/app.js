@@ -214,6 +214,8 @@ function renderResult(r) {
       </div>
     </section>
 
+    ${renderNow(r)}
+
     ${renderHours(r)}
 
     <section class="conf" aria-label="${esc(r.confidenceLabel)}">
@@ -242,6 +244,14 @@ function renderResult(r) {
     <p class="fine">${esc(u.fine1)} <a href="https://www.inumet.gub.uy/alerta" target="_blank" rel="noopener">INUMET</a><br />
     ${esc(u.fine2)}</p>
     <p class="fine contact"><a href="mailto:pablo.j.manzoni@gmail.com?subject=Cubierto">${esc(u.contact)}</a></p>`;
+}
+
+// ---------- Ahora: rayos cerca (GOES-19), del JSON que se publica cada 10 minutos ----------
+// Con ambiente de granizo y rayos a ≤ 20 km, el aviso de cubrir el auto; si solo hay rayos más lejos, una línea informativa.
+// Un engine.js viejo en caché no trae `now`: no se muestra nada.
+function renderNow(r) {
+  if (!r.now) return '';
+  return `<section class="now${r.now.alert ? ' alert' : ''}" role="${r.now.alert ? 'alert' : 'status'}"><p><strong>${esc(r.now.strong)}</strong> ${esc(r.now.text)}</p></section>`;
 }
 
 // ---------- Horas: una tira que se desliza ----------

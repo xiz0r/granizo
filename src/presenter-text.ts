@@ -32,6 +32,8 @@ export interface PresenterText {
   confidenceLabels: Record<'low' | 'medium' | 'high', string>;
   usual: { strong: string; text: (falseAlarm: number) => string };
   inumet: { strong: string; protect: string; storm: string };
+  /** "Ahora", con los rayos del GOES-19: `km` a la celda con rayos más cercana, `ageMin` cuántos minutos tienen los datos. */
+  nowcast: { alertStrong: string; alert: (km: number, ageMin: number) => string; nearStrong: string; near: (km: number, ageMin: number) => string };
   reason: { onlyModel: (model: string) => string; disagree: string; agree: string; warm: string };
   reasons: Record<ReasonCode, string>;
   now: string;
@@ -74,6 +76,9 @@ export interface PresenterText {
 }
 
 const tenths = (x: number) => Math.round(x * 10);
+const agoEs = (min: number) => (min <= 1 ? 'recién' : `hace ${min} min`);
+const agoEn = (min: number) => (min <= 1 ? 'just now' : `${min} min ago`);
+const agoSw = (min: number) => (min <= 1 ? 'hivi punde' : `dakika ${min} zilizopita`);
 
 const es: PresenterText = {
   locale: 'es-UY',
@@ -118,6 +123,12 @@ const es: PresenterText = {
       `Así sale en ${x >= 0.95 ? 'casi todos los' : `${tenths(x)} de cada 10`} días de tormenta. No es para correr: es para tener pensado dónde guardarlo.`,
   },
   inumet: { strong: 'Mirá también INUMET.', protect: 'Esto no reemplaza los avisos oficiales.', storm: 'Una tormenta puede traer lluvia fuerte, rayos o viento.' },
+  nowcast: {
+    alertStrong: 'Tormenta eléctrica cerca.',
+    alert: (km, age) => `Rayos a ${km} km ${agoEs(age)}, con ambiente de granizo: si el auto está afuera, cubrilo ahora.`,
+    nearStrong: 'Tormenta eléctrica.',
+    near: (km, age) => `Rayos a ${km} km ${agoEs(age)}.`,
+  },
   reason: {
     onlyModel: (m) => `Solo respondió ${m}: no hay con qué contrastar`,
     disagree: 'Los modelos no coinciden: te damos el punto medio',
@@ -227,6 +238,12 @@ const en: PresenterText = {
       `It comes out like this on ${x >= 0.95 ? 'almost all' : `${tenths(x)} in 10`} storm days. No need to rush: just have a place in mind to put the car.`,
   },
   inumet: { strong: 'Check INUMET too.', protect: "This doesn't replace official warnings.", storm: 'A storm can bring heavy rain, lightning or wind.' },
+  nowcast: {
+    alertStrong: 'Thunderstorm nearby.',
+    alert: (km, age) => `Lightning ${km} km away ${agoEn(age)}, with hail-favourable conditions: if the car is outside, cover it now.`,
+    nearStrong: 'Thunderstorm.',
+    near: (km, age) => `Lightning ${km} km away ${agoEn(age)}.`,
+  },
   reason: {
     onlyModel: (m) => `Only ${m} responded: nothing to compare against`,
     disagree: "The models don't agree: we give you the middle ground",
@@ -345,6 +362,12 @@ const sw: PresenterText = {
       `Hutokea hivi katika ${x >= 0.95 ? 'karibu siku zote' : `siku ${tenths(x)} kati ya 10`} za dhoruba. Si jambo la kukimbilia: ni kuwa na mahali pa kuliweka gari akilini.`,
   },
   inumet: { strong: 'Angalia pia INUMET.', protect: 'Hii haichukui nafasi ya tahadhari rasmi.', storm: 'Dhoruba inaweza kuleta mvua kubwa, radi au upepo.' },
+  nowcast: {
+    alertStrong: 'Dhoruba ya radi iko karibu.',
+    alert: (km, age) => `Radi umbali wa km ${km} ${agoSw(age)}, na hali inafaa mvua ya mawe: kama gari liko nje, lifunike sasa.`,
+    nearStrong: 'Dhoruba ya radi.',
+    near: (km, age) => `Radi umbali wa km ${km} ${agoSw(age)}.`,
+  },
   reason: {
     onlyModel: (m) => `Ni ${m} pekee iliyojibu: hakuna cha kulinganisha`,
     disagree: 'Modeli hazikubaliani: tunakupa kiwango cha kati',

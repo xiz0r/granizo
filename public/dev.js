@@ -11,6 +11,8 @@ const SCENARIOS = [
   ['atento_divididos', 'Divididos'],
   ['protegelo', 'Protegelo'],
   ['un_modelo', '1 modelo'],
+  ['ahora_rayos', 'Ahora: rayos'],
+  ['rayos_lejos', 'Rayos lejos'],
 ];
 const STATES = [
   ['loading', 'Cargando', () => showView('loading')],

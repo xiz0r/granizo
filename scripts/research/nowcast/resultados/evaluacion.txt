@@ -1,0 +1,40 @@
+76 casos con hora: 13 granizadas, 63 tormentas sin granizo; corrimiento de los METAR 'hora previa': 30 min (3 casos)
+
+Motor solo (nivel del día):
+  "Algunas chances" o más                              detecta 10/13 ( 77%)   falsas alarmas 20/63 ( 32%)   TSS +0.45
+  "Chances reales"                                     detecta  6/13 ( 46%)   falsas alarmas  6/63 ( 10%)   TSS +0.37
+
+Rayos de la media hora que termina 10 min antes del granizo:
+  sin motor: regla ≤20 km y ≥3 rayos → detecta 11/13, falsas 27/63 | validación cruzada (elige radio y cantidad sin la fecha): detecta 54%, falsas 43%
+  motor ≥ "Algunas chances": regla ≤20 km y ≥3 rayos → detecta 9/13, falsas 10/63 | validación cruzada (elige radio y cantidad sin la fecha): detecta 54%, falsas 16%
+  motor "Chances reales": regla ≤20 km y ≥3 rayos → detecta 6/13, falsas 2/63 | validación cruzada (elige radio y cantidad sin la fecha): detecta 46%, falsas 3%
+  tabla con motor ≥ "Algunas chances" (detecta/falsas):
+    ≤20 km: ≥1 rayos 9/11   ≥3 rayos 9/10   ≥10 rayos 7/6   ≥30 rayos 7/4
+    ≤30 km: ≥1 rayos 9/15   ≥3 rayos 9/14   ≥10 rayos 8/12   ≥30 rayos 7/7
+    ≤50 km: ≥1 rayos 9/17   ≥3 rayos 9/17   ≥10 rayos 9/16   ≥30 rayos 8/14
+
+Rayos de la media hora que termina 20 min antes del granizo:
+  sin motor: regla ≤20 km y ≥3 rayos → detecta 10/13, falsas 17/63 | validación cruzada (elige radio y cantidad sin la fecha): detecta 77%, falsas 27%
+  motor ≥ "Algunas chances": regla ≤20 km y ≥3 rayos → detecta 8/13, falsas 7/63 | validación cruzada (elige radio y cantidad sin la fecha): detecta 62%, falsas 13%
+  motor "Chances reales": regla ≤20 km y ≥3 rayos → detecta 5/13, falsas 2/63 | validación cruzada (elige radio y cantidad sin la fecha): detecta 38%, falsas 3%
+  tabla con motor ≥ "Algunas chances" (detecta/falsas):
+    ≤20 km: ≥1 rayos 9/8   ≥3 rayos 8/7   ≥10 rayos 6/5   ≥30 rayos 6/2
+    ≤30 km: ≥1 rayos 9/14   ≥3 rayos 8/11   ≥10 rayos 8/7   ≥30 rayos 6/5
+    ≤50 km: ≥1 rayos 9/16   ≥3 rayos 9/15   ≥10 rayos 8/15   ≥30 rayos 8/12
+
+Granizadas, regla ≤20 km y ≥3 rayos (motor: 0 muy pocas, 1 algunas, 2 reales):
+  2022-07-10 22:00 San Ramón                    motor 2  rayos con datos de 10 min: sí, de 20 min: sí  primer disparo: 21 min antes
+  2023-09-17 14:40 Balneario Buenos Aires (La B motor 2  rayos con datos de 10 min: sí, de 20 min: sí  primer disparo: 87 min antes
+  2024-06-22 13:45 Trinidad                     motor 2  rayos con datos de 10 min: sí, de 20 min: sí  primer disparo: 43 min antes
+  2024-08-06 09:00 Salto (aeropuerto)           motor 1  rayos con datos de 10 min: sí, de 20 min: sí  primer disparo: 40 min antes
+  2024-09-09 16:24 El Pinar (Ciudad de la Costa motor 1  rayos con datos de 10 min: no, de 20 min: no  primer disparo: —
+  2024-09-19 11:00 Salto                        motor 2  rayos con datos de 10 min: sí, de 20 min: sí  primer disparo: 55 min antes
+  2024-10-17 14:00 Salto (aeropuerto)           motor 0  rayos con datos de 10 min: sí, de 20 min: no  primer disparo: 10 min antes
+  2025-01-01 16:50 Montevideo                   motor 1  rayos con datos de 10 min: sí, de 20 min: sí  primer disparo: 29 min antes
+  2025-06-16 19:00 Rivera                       motor 0  rayos con datos de 10 min: no, de 20 min: sí  primer disparo: 81 min antes
+  2025-09-22 13:30 Minas                        motor 0  rayos con datos de 10 min: sí, de 20 min: sí  primer disparo: 90 min antes
+  2026-08-17 01:00 Rivera (aeropuerto)          motor 1  rayos con datos de 10 min: sí, de 20 min: sí  primer disparo: 75 min antes
+  2026-08-27 23:50 Treinta y Tres               motor 2  rayos con datos de 10 min: sí, de 20 min: no  primer disparo: 10 min antes
+  2026-09-20 23:00 Rivera (aeropuerto)          motor 2  rayos con datos de 10 min: sí, de 20 min: sí  primer disparo: 68 min antes
+
+Con las celdas de 0,1° del JSON la regla da lo mismo que con la distancia exacta en 76/76 casos.

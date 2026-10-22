@@ -4,7 +4,8 @@
 import { assessBySensitivity } from './assess.ts';
 import { fmtLocal, nowLocal } from './cli/args.ts';
 import { configureOpenMeteo, NetworkError, RateLimitError, SlowError, type CacheStore } from './data/openMeteo.ts';
-import type { Sensitivity } from './engine/config.ts';
+import { NOWCAST, type Sensitivity } from './engine/config.ts';
+import { nowcastAt, type Nowcast } from './nowcast.ts';
 import { presentAllLangs, type Lang, type ResultView } from './presenter.ts';
 import { resolveWindow, WINDOW_LABELS, WINDOW_NAMES, type WindowName } from './windows.ts';
 
@@ -37,6 +38,16 @@ const sessionCache: CacheStore = {
 };
 configureOpenMeteo({ cache: sessionCache, waitOnMinuteLimit: false, attempts: 2, timeoutMs: 20_000 });
 
+/** "Ahora" (rayos cada 10 min, ver nowcast.yml). Si no llega o está viejo, la app sigue sin ese bloque. */
+async function fetchNowcast(lat: number, lon: number): Promise<Nowcast | null> {
+  try {
+    const res = await fetch(NOWCAST.url, { cache: 'no-cache', signal: AbortSignal.timeout(8_000) });
+    return res.ok ? nowcastAt(await res.json(), lat, lon, Date.now()) : null;
+  } catch {
+    return null;
+  }
+}
+
 /** Uruguay con margen: el motor está calibrado acá. */
 const BOUNDS = { latMin: -35.5, latMax: -29.5, lonMin: -59.0, lonMax: -52.5 };
 
@@ -64,8 +75,8 @@ export async function assessHere(latIn: number, lonIn: number, windowName: Windo
   const name: WindowName = WINDOW_NAMES.includes(windowName) ? windowName : 'next24h';
   const { from, to } = resolveWindow(name);
   try {
-    const r = await assessBySensitivity({ center: { lat, lon }, from, to, source: 'forecast' });
-    return presentAllLangs(r, { name, label: WINDOW_LABELS[name], from, to }, fmtLocal(nowLocal()));
+    const [r, nowcast] = await Promise.all([assessBySensitivity({ center: { lat, lon }, from, to, source: 'forecast' }), fetchNowcast(lat, lon)]);
+    return presentAllLangs(r, { name, label: WINDOW_LABELS[name], from, to }, fmtLocal(nowLocal()), nowcast);
   } catch (err) {
     if (err instanceof RateLimitError) throw new AssessError('limit', err.message);
     if (err instanceof SlowError) throw new AssessError('slow', err.message);
