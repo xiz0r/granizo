@@ -1,16 +1,7 @@
-// "Ahora": lo que está pasando cerca, desde el JSON que publica .github/workflows/nowcast.yml cada 10 minutos
+// "Ahora": rayos cerca, desde el JSON que publica .github/workflows/nowcast.yml cada 10 minutos
 // (scripts/nowcast/build.py). Sin I/O: recibe el JSON ya descargado y la ubicación.
 import { NOWCAST } from './engine/config.ts';
 import type { RiskLevel } from './engine/types.ts';
-
-export interface RadarFrame {
-  id: string;
-  name: string;
-  utc: string;
-  png: string;
-  /** [latMin, latMax, lonMin, lonMax] de la imagen. */
-  bounds: [number, number, number, number];
-}
 
 export interface Nowcast {
   /** Minutos entre el último rayo que cubren los datos y `now`. */
@@ -21,17 +12,10 @@ export interface Nowcast {
   flashesLast10: number;
   /** Distancia a la celda con rayos más cercana (km), hasta NOWCAST.lookKm; null si no hay. */
   nearestKm: number | null;
-  /** Lluvia estimada por satélite, máximo a ≤ NOWCAST.radiusKm (mm/h); null sin dato. */
-  rainMaxMmH: number | null;
-  /** Última imagen de cada radar que la tiene (REDEMET). */
-  radar: RadarFrame[];
 }
 
-type Cells = number[][];
 interface Doc {
-  lightning?: { toUtc?: string; grid?: { cells?: Cells } };
-  rain?: { grid?: { cells?: Cells } };
-  radar?: { id: string; name: string; status: string; frames?: { utc: string; png: string; bounds: number[] }[] }[];
+  lightning?: { toUtc?: string; grid?: { cells?: number[][] } };
 }
 
 const km = (lat0: number, lon0: number, lat: number, lon: number) =>
@@ -57,17 +41,7 @@ export function nowcastAt(doc: unknown, lat: number, lon: number, nowMs: number)
     flashesLast10 += slots[0] ?? 0;
   }
 
-  let rainMaxMmH: number | null = d?.rain?.grid?.cells ? 0 : null;
-  for (const [clat, clon, mmh] of d?.rain?.grid?.cells ?? []) {
-    if (km(lat, lon, clat, clon) <= NOWCAST.radiusKm) rainMaxMmH = Math.max(rainMaxMmH ?? 0, mmh);
-  }
-
-  const radar: RadarFrame[] = (d?.radar ?? []).flatMap((r) => {
-    const f = r.status === 'ok' ? r.frames?.at(-1) : undefined;
-    return f ? [{ id: r.id, name: r.name, utc: f.utc, png: f.png, bounds: f.bounds as RadarFrame['bounds'] }] : [];
-  });
-
-  return { ageMin: Math.max(0, Math.round(ageMin)), flashes, flashesLast10, nearestKm: nearestKm === null ? null : Math.round(nearestKm), rainMaxMmH, radar };
+  return { ageMin: Math.max(0, Math.round(ageMin)), flashes, flashesLast10, nearestKm: nearestKm === null ? null : Math.round(nearestKm) };
 }
 
 /**

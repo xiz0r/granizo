@@ -124,19 +124,16 @@ export const WARM_SEASON_MONTHS = [10, 11, 12, 1, 2, 3];
 
 /**
  * Aviso "Ahora": el motor ve ambiente de granizo para hoy Y hay una tormenta eléctrica activa cerca (rayos del GOES-19,
- * del JSON que publica .github/workflows/nowcast.yml cada 10 minutos).
+ * del JSON que publica .github/workflows/nowcast.yml cada 10 minutos). Dice CUÁNDO, no si va a granizar: los rayos
+ * cerca aparecen casi igual en tormentas con y sin granizo (scripts/research/nowcast/, datos de hace 20 min).
  *
- * Calibrado con los 76 casos con hora (13 granizadas, 63 tormentas sin granizo) usando solo los rayos de ANTES del
- * granizo, con los datos 10–20 minutos viejos como llegan a la app (scripts/research/nowcast/). Con datos de hace 20 min:
- *
- *                                                   detecta   falsas alarmas
- *   motor "Algunas chances" o más, solo              10/13       20/63 (32%)
- *   motor "Chances reales", solo                      6/13        6/63 (10%)
- *   Algunas chances o más + ≥ 3 rayos a ≤ 20 km        8/13        7/63 (11%)   ← el aviso
- *
- * Saltó entre 21 y 87 minutos antes del granizo (mediana ~50). Validación cruzada dejando una fecha afuera: 54–62% de
- * detección y 13–16% de falsas alarmas según la demora de los datos. Radio y cantidad se eligieron mirando estos mismos
- * casos (son pocos): tomarlos como provisorios hasta medirlos hacia adelante.
+ * - En la media hora previa al granizo: 8 de 13 granizadas uruguayas (donde se eligieron radio y cantidad) y 4 de 9 en
+ *   aeropuertos del sur de Brasil (prueba independiente, sin reajustar nada). En las tormentas sin granizo, a la misma
+ *   hora: 7 de 63 y 6 de 44.
+ * - Durante todo el día, en 85 días de tormenta con "Algunas chances" o más: saltó en 45 de 46 días con granizo y en 36
+ *   de 39 sin granizo (mediana 3 h prendido). Estaba prendido al llegar el granizo en 12 de 15 con hora, 8 de ellos con
+ *   10 minutos o más de anticipación (mediana 45 min).
+ * Radio y cantidad se eligieron con pocos casos; las variantes cercanas (25–30 km, 10 rayos) dan casi lo mismo.
  */
 export const NOWCAST = {
   radiusKm: 20,

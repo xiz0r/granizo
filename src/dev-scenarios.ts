@@ -48,7 +48,7 @@ const range = (a: number, b: number, env: Env) => Object.fromEntries(Array.from(
 type Scenario = { models: { model: string; pattern: Record<number, Env> }[]; start: string; nowcast?: Nowcast };
 
 const lightning = (nearestKm: number, flashes: number, ageMin: number): Nowcast => ({
-  ageMin, flashes, flashesLast10: flashes, nearestKm, rainMaxMmH: null, radar: [],
+  ageMin, flashes, flashesLast10: flashes, nearestKm,
 });
 
 const SCENARIOS: Record<string, () => Scenario> = {

@@ -1,0 +1,170 @@
+114 casos a ≤ 330 km de un radar; 92 con al menos medio día de imágenes (30 con granizo, 62 sin granizo)
+
+Uruguay, en el día: 19 con granizo, 11 sin granizo
+  máx a ≤10 km   AUC 0.80   ≥45: 17/19 vs  5/11   ≥50: 14/19 vs  1/11   ≥55:  5/19 vs  1/11   ≥60:  3/19 vs  1/11
+  máx a ≤20 km   AUC 0.91   ≥45: 19/19 vs  5/11   ≥50: 17/19 vs  1/11   ≥55: 12/19 vs  1/11   ≥60:  4/19 vs  1/11
+  máx a ≤30 km   AUC 0.90   ≥45: 19/19 vs  6/11   ≥50: 18/19 vs  3/11   ≥55: 15/19 vs  2/11   ≥60:  8/19 vs  1/11
+Uruguay, en el día, motor ≥ "Algunas chances": 14 con granizo, 4 sin granizo
+  máx a ≤10 km   AUC 0.88   ≥45: 13/14 vs  2/4   ≥50: 10/14 vs  0/4   ≥55:  3/14 vs  0/4   ≥60:  2/14 vs  0/4
+  máx a ≤20 km   AUC 0.99   ≥45: 14/14 vs  2/4   ≥50: 13/14 vs  0/4   ≥55:  8/14 vs  0/4   ≥60:  3/14 vs  0/4
+  máx a ≤30 km   AUC 0.89   ≥45: 14/14 vs  2/4   ≥50: 13/14 vs  1/4   ≥55: 11/14 vs  1/4   ≥60:  5/14 vs  0/4
+Uruguay, 60–30 min antes: 2 con granizo, 9 sin granizo
+  máx a ≤10 km   AUC 0.92   ≥45:  0/2 vs  0/9   ≥50:  0/2 vs  0/9   ≥55:  0/2 vs  0/9   ≥60:  0/2 vs  0/9
+  máx a ≤20 km   AUC 0.89   ≥45:  1/2 vs  0/9   ≥50:  1/2 vs  0/9   ≥55:  0/2 vs  0/9   ≥60:  0/2 vs  0/9
+  máx a ≤30 km   AUC 1.00   ≥45:  2/2 vs  1/9   ≥50:  1/2 vs  0/9   ≥55:  1/2 vs  0/9   ≥60:  0/2 vs  0/9
+
+Sur de Brasil, en el día: 11 con granizo, 51 sin granizo
+  máx a ≤10 km   AUC 0.69   ≥45:  8/11 vs 23/51   ≥50:  5/11 vs  8/51   ≥55:  3/11 vs  4/51   ≥60:  1/11 vs  0/51
+  máx a ≤20 km   AUC 0.73   ≥45: 11/11 vs 31/51   ≥50:  7/11 vs 20/51   ≥55:  4/11 vs  4/51   ≥60:  3/11 vs  2/51
+  máx a ≤30 km   AUC 0.73   ≥45: 11/11 vs 36/51   ≥50:  9/11 vs 27/51   ≥55:  5/11 vs 10/51   ≥60:  4/11 vs  3/51
+Sur de Brasil, en el día, motor ≥ "Algunas chances": 5 con granizo, 12 sin granizo
+  máx a ≤10 km   AUC 0.49   ≥45:  3/5 vs  8/12   ≥50:  2/5 vs  4/12   ≥55:  1/5 vs  3/12   ≥60:  0/5 vs  0/12
+  máx a ≤20 km   AUC 0.51   ≥45:  5/5 vs  9/12   ≥50:  3/5 vs  8/12   ≥55:  2/5 vs  3/12   ≥60:  1/5 vs  2/12
+  máx a ≤30 km   AUC 0.43   ≥45:  5/5 vs 10/12   ≥50:  3/5 vs 10/12   ≥55:  2/5 vs  5/12   ≥60:  2/5 vs  2/12
+Sur de Brasil, 60–30 min antes: 9 con granizo, 40 sin granizo
+  máx a ≤10 km   AUC 0.74   ≥45:  3/9 vs  1/40   ≥50:  2/9 vs  0/40   ≥55:  0/9 vs  0/40   ≥60:  0/9 vs  0/40
+  máx a ≤20 km   AUC 0.70   ≥45:  4/9 vs  3/40   ≥50:  3/9 vs  0/40   ≥55:  2/9 vs  0/40   ≥60:  0/9 vs  0/40
+  máx a ≤30 km   AUC 0.72   ≥45:  5/9 vs  8/40   ≥50:  4/9 vs  4/40   ≥55:  2/9 vs  2/40   ≥60:  2/9 vs  2/40
+
+Todos, en el día: 30 con granizo, 62 sin granizo
+  máx a ≤10 km   AUC 0.77   ≥45: 25/30 vs 28/62   ≥50: 19/30 vs  9/62   ≥55:  8/30 vs  5/62   ≥60:  4/30 vs  1/62
+  máx a ≤20 km   AUC 0.84   ≥45: 30/30 vs 36/62   ≥50: 24/30 vs 21/62   ≥55: 16/30 vs  5/62   ≥60:  7/30 vs  3/62
+  máx a ≤30 km   AUC 0.82   ≥45: 30/30 vs 42/62   ≥50: 27/30 vs 30/62   ≥55: 20/30 vs 12/62   ≥60: 12/30 vs  4/62
+Todos, en el día, motor ≥ "Algunas chances": 19 con granizo, 16 sin granizo
+  máx a ≤10 km   AUC 0.67   ≥45: 16/19 vs 10/16   ≥50: 12/19 vs  4/16   ≥55:  4/19 vs  3/16   ≥60:  2/19 vs  0/16
+  máx a ≤20 km   AUC 0.75   ≥45: 19/19 vs 11/16   ≥50: 16/19 vs  8/16   ≥55: 10/19 vs  3/16   ≥60:  4/19 vs  2/16
+  máx a ≤30 km   AUC 0.69   ≥45: 19/19 vs 12/16   ≥50: 16/19 vs 11/16   ≥55: 13/19 vs  6/16   ≥60:  7/19 vs  2/16
+Todos, 60–30 min antes: 11 con granizo, 49 sin granizo
+  máx a ≤10 km   AUC 0.78   ≥45:  3/11 vs  1/49   ≥50:  2/11 vs  0/49   ≥55:  0/11 vs  0/49   ≥60:  0/11 vs  0/49
+  máx a ≤20 km   AUC 0.75   ≥45:  5/11 vs  3/49   ≥50:  4/11 vs  0/49   ≥55:  2/11 vs  0/49   ≥60:  0/11 vs  0/49
+  máx a ≤30 km   AUC 0.77   ≥45:  7/11 vs  9/49   ≥50:  5/11 vs  4/49   ≥55:  3/11 vs  2/49   ≥60:  2/11 vs  2/49
+
+Casos con hora, radar y rayos: 11 con granizo, 49 sin granizo (datos de 20 min para los rayos)
+  ≥3 rayos a ≤20 km            solo:  9/11 vs 21/49   con motor ≥ "Algunas chances":  4/8 vs  4/39
+  radar ≥50 dBZ a ≤20 km       solo:  4/11 vs  0/49   con motor ≥ "Algunas chances":  1/8 vs  0/39
+  radar ≥55 dBZ a ≤20 km       solo:  2/11 vs  0/49   con motor ≥ "Algunas chances":  1/8 vs  0/39
+  rayos y radar ≥50            solo:  4/11 vs  0/49   con motor ≥ "Algunas chances":  1/8 vs  0/39
+  rayos o radar ≥50            solo:  9/11 vs 21/49   con motor ≥ "Algunas chances":  4/8 vs  4/39
+
+Aviso de radar a lo largo del día (como la app: imagen de hasta 30 min antes), motor sin mirar / con motor ≥ "Algunas chances":
+  ≥50 dBZ a ≤10 km: días de granizo 19/30, sin granizo 9/62, antes del granizo 4/15   |  con motor: 12/19, 4/16, antes 0/8
+  ≥45 dBZ a ≤20 km: días de granizo 30/30, sin granizo 36/62, antes del granizo 6/15   |  con motor: 19/19, 11/16, antes 1/8
+  ≥50 dBZ a ≤20 km: días de granizo 24/30, sin granizo 21/62, antes del granizo 5/15   |  con motor: 16/19, 8/16, antes 1/8
+  ≥55 dBZ a ≤20 km: días de granizo 16/30, sin granizo 5/62, antes del granizo 3/15   |  con motor: 10/19, 3/16, antes 1/8
+  ≥50 dBZ a ≤30 km: días de granizo 27/30, sin granizo 30/62, antes del granizo 6/15   |  con motor: 16/19, 11/16, antes 1/8
+
+Casos (máx a ≤10/20 km en el día; 60–30 min antes a ≤20 km):
+  GRANIZO 2018-09-24 Santo Ângelo (RS)        motor —    47   49 dBZ  antes  49  [sg 129 km]
+  GRANIZO 2018-12-14 Canoas (RS)              motor —    51   51 dBZ  antes  51  [cn 220 km]
+  GRANIZO 2019-10-29 Pelotas (RS)             motor —   nan  nan dBZ  [sin radar]
+  GRANIZO 2021-02-20 Pelotas (RS)             motor —    38   52 dBZ  antes  18  [cn 50 km]
+  GRANIZO 2021-12-21 Rivera                   motor 2    46   54 dBZ  [sg 195 km, cn 276 km]
+  GRANIZO 2022-08-15 Porto Alegre (RS)        motor 2    36   49 dBZ  antes  30  [cn 214 km]
+  GRANIZO 2023-03-20 Porto Alegre (RS)        motor 0   nan  nan dBZ  [sin radar]
+  GRANIZO 2023-08-23 Porto Alegre (RS)        motor 2    46   46 dBZ  antes  -1  [cn 214 km]
+  GRANIZO 2023-09-26 Santa Maria (RS)         motor 0    62   69 dBZ  antes  58  [sg 132 km, cn 211 km]
+  GRANIZO 2023-10-03 Artigas                  motor 2    78   78 dBZ  [sg 197 km]
+  GRANIZO 2023-10-16 Santa Maria (RS)         motor 1    54   58 dBZ  antes  58  [sg 132 km, cn 211 km]
+  GRANIZO 2024-01-16 Baltasar Brum            motor 2   nan  nan dBZ  [sin radar]
+  GRANIZO 2024-01-16 Porto Alegre (RS)        motor 0    46   46 dBZ  [cn 214 km]
+  GRANIZO 2024-02-04 Rivera                   motor 0    56   58 dBZ  [cn 276 km, sg 195 km]
+  GRANIZO 2024-02-23 Lascano                  motor 0    51   55 dBZ  [cn 289 km]
+  GRANIZO 2024-02-23 Tranqueras               motor 0    24   48 dBZ  [sg 233 km, cn 292 km]
+  GRANIZO 2024-04-30 Bagé (RS)                motor 2    56   62 dBZ  antes  34  [sg 249 km, cn 134 km]
+  GRANIZO 2024-05-22 Pelotas (RS)             motor 0    58   62 dBZ  antes  30  [cn 50 km]
+  GRANIZO 2024-08-05 Las Flores               motor 2    50   57 dBZ  [sg 285 km, cn 240 km]
+  GRANIZO 2024-09-09 Barra del Chuy           motor 2    52   58 dBZ  [cn 270 km]
+  GRANIZO 2024-09-24 Baltasar Brum            motor 2   nan  nan dBZ  [sin radar]
+  GRANIZO 2024-12-01 Isidoro Noblía           motor 1    54   60 dBZ  [cn 148 km, sg 314 km]
+  GRANIZO 2025-03-03 Clara                    motor 1    53   53 dBZ  [cn 301 km]
+  GRANIZO 2025-06-16 Rivera                   motor 0    69   69 dBZ  antes  54  [sg 195 km, cn 276 km]
+  GRANIZO 2025-07-26 Termas del Arapey        motor 0    54   58 dBZ  [sg 314 km]
+  GRANIZO 2026-02-11 Cebollatí                motor 1    54   63 dBZ  [cn 232 km]
+  GRANIZO 2026-04-26 Barra del Chuy           motor 2   nan  nan dBZ  [sin radar]
+  GRANIZO 2026-07-18 Pelotas (RS)             motor 2    40   50 dBZ  [cn 50 km]
+  GRANIZO 2026-07-27 Tomás Gomensoro          motor 2    60   62 dBZ  [sg 277 km]
+  GRANIZO 2026-07-28 Artigas                  motor 2    57   57 dBZ  [sg 197 km]
+  GRANIZO 2026-08-16 Nico Pérez               motor 1   nan  nan dBZ  [sin radar]
+  GRANIZO 2026-08-17 Rivera (aeropuerto)      motor 1    54   54 dBZ  [sg 195 km]
+  GRANIZO 2026-08-18 Pelotas (RS)             motor —   nan  nan dBZ  [sin radar]
+  GRANIZO 2026-08-27 Treinta y Tres           motor 2    47   48 dBZ  [cn 258 km]
+  GRANIZO 2026-08-27 Vichadero                motor 2    44   55 dBZ  [cn 193 km, sg 285 km]
+  GRANIZO 2026-09-20 Rivera (aeropuerto)      motor 2    47   52 dBZ  antes  42  [cn 276 km, sg 195 km]
+  GRANIZO 2026-09-21 Porto Alegre (RS)        motor —   nan  nan dBZ  [sin radar]
+  GRANIZO 2026-09-27 Rivera                   motor 2    54   54 dBZ  [sg 195 km, cn 276 km]
+  GRANIZO 2026-10-08 Melo (aeropuerto)        motor —   nan  nan dBZ  [sin radar]
+  control 2018-05-02 Bagé (RS)                motor —    43   54 dBZ  antes  24  [sg 249 km]
+  control 2018-08-24 Porto Alegre (RS)        motor —    26   40 dBZ  antes  14  [cn 214 km]
+  control 2019-07-22 Pelotas (RS)             motor —   nan  nan dBZ  [sin radar]
+  control 2019-08-12 Porto Alegre (RS)        motor —   nan  nan dBZ  [sin radar]
+  control 2019-10-16 Santa Maria (RS)         motor —   nan  nan dBZ  [sin radar]
+  control 2019-10-17 Santa Maria (RS)         motor —   nan  nan dBZ  [sin radar]
+  control 2019-11-02 Pelotas (RS)             motor —   nan  nan dBZ  [sin radar]
+  control 2019-12-15 Canoas (RS)              motor —   nan  nan dBZ  [sin radar]
+  control 2020-04-28 Bagé (RS)                motor —    44   46 dBZ  antes  40  [sg 249 km, cn 134 km]
+  control 2020-04-29 Bagé (RS)                motor —    36   44 dBZ  [cn 134 km, sg 249 km]
+  control 2020-05-21 Pelotas (RS)             motor —    42   46 dBZ  antes  33  [cn 50 km]
+  control 2020-08-14 Porto Alegre (RS)        motor —    -1   36 dBZ  antes  -1  [cn 214 km]
+  control 2020-09-27 Santa Maria (RS)         motor —    47   50 dBZ  antes  40  [cn 211 km, sg 132 km]
+  control 2020-12-12 Canoas (RS)              motor —    -1   20 dBZ  [cn 220 km]
+  control 2020-12-13 Canoas (RS)              motor —    46   46 dBZ  antes  22  [cn 220 km]
+  control 2021-01-16 Porto Alegre (RS)        motor —    18   22 dBZ  antes  13  [cn 214 km]
+  control 2021-03-17 Porto Alegre (RS)        motor —    22   27 dBZ  antes  -1  [cn 214 km]
+  control 2021-05-28 Pelotas (RS)             motor 0    38   43 dBZ  antes  14  [cn 50 km]
+  control 2021-08-18 Porto Alegre (RS)        motor 1    34   34 dBZ  antes  34  [cn 214 km]
+  control 2021-08-18 Pelotas (RS)             motor 1    58   61 dBZ  antes  28  [cn 50 km]
+  control 2021-08-23 Porto Alegre (RS)        motor 0    19   32 dBZ  antes  17  [cn 214 km]
+  control 2021-08-24 Porto Alegre (RS)        motor 0    36   36 dBZ  antes  -1  [cn 214 km]
+  control 2021-09-17 Santo Ângelo (RS)        motor 0    38   46 dBZ  antes  30  [sg 129 km]
+  control 2021-09-20 Porto Alegre (RS)        motor 1    19   38 dBZ  antes  -1  [cn 214 km]
+  control 2021-10-08 Santo Ângelo (RS)        motor 0    35   41 dBZ  antes  -1  [sg 129 km]
+  control 2022-01-16 Porto Alegre (RS)        motor 0    42   42 dBZ  antes  18  [cn 214 km]
+  control 2022-02-20 Pelotas (RS)             motor 1    56   59 dBZ  antes  18  [cn 50 km]
+  control 2022-04-28 Bagé (RS)                motor 1    48   52 dBZ  [sg 249 km, cn 134 km]
+  control 2022-05-28 Pelotas (RS)             motor 0    45   52 dBZ  antes  42  [cn 50 km]
+  control 2022-07-16 Pelotas (RS)             motor 2   nan  nan dBZ  [sin radar]
+  control 2022-09-19 Santo Ângelo (RS)        motor 0    41   48 dBZ  antes   6  [sg 129 km]
+  control 2023-05-26 Pelotas (RS)             motor 0    38   44 dBZ  [cn 50 km]
+  control 2023-07-20 Pelotas (RS)             motor 0    50   50 dBZ  antes  30  [cn 50 km]
+  control 2023-08-17 Pelotas (RS)             motor 0    48   52 dBZ  antes  38  [cn 50 km]
+  control 2023-08-18 Pelotas (RS)             motor 0    50   50 dBZ  [cn 50 km]
+  control 2023-09-19 Santo Ângelo (RS)        motor 0    51   53 dBZ  antes  44  [sg 129 km]
+  control 2023-09-19 Porto Alegre (RS)        motor 0    23   26 dBZ  antes   8  [cn 214 km]
+  control 2023-09-22 Porto Alegre (RS)        motor 1    36   36 dBZ  antes  21  [cn 214 km]
+  control 2023-09-23 Porto Alegre (RS)        motor 0    28   28 dBZ  [cn 214 km]
+  control 2023-09-23 Santa Maria (RS)         motor 1    56   63 dBZ  antes  12  [sg 132 km, cn 211 km]
+  control 2023-10-07 Santo Ângelo (RS)        motor 1    49   52 dBZ  antes  38  [sg 129 km]
+  control 2023-10-22 Pelotas (RS)             motor 0    42   49 dBZ  [cn 50 km]
+  control 2024-03-20 Porto Alegre (RS)        motor 0    12   26 dBZ  [cn 214 km]
+  control 2024-08-17 Pelotas (RS)             motor 0    52   52 dBZ  [cn 50 km]
+  control 2024-09-26 Santa Maria (RS)         motor 1    48   54 dBZ  [cn 211 km]
+  control 2024-10-07 Santo Ângelo (RS)        motor 0    42   46 dBZ  antes  46  [sg 129 km]
+  control 2024-10-07 Santa Maria (RS)         motor 0    47   48 dBZ  antes  35  [sg 132 km, cn 211 km]
+  control 2024-10-15 Santa Maria (RS)         motor 0    47   52 dBZ  antes  47  [sg 132 km, cn 211 km]
+  control 2024-10-24 Pelotas (RS)             motor 0    53   53 dBZ  antes  23  [cn 50 km]
+  control 2024-11-02 Pelotas (RS)             motor 0   nan  nan dBZ  [sin radar]
+  control 2024-12-13 Canoas (RS)              motor 0   nan  nan dBZ  [sin radar]
+  control 2025-01-16 Porto Alegre (RS)        motor 0    50   50 dBZ  antes  11  [cn 214 km]
+  control 2025-02-16 Pelotas (RS)             motor 1    53   53 dBZ  antes  26  [cn 50 km]
+  control 2025-02-19 Pelotas (RS)             motor 0    56   58 dBZ  antes  48  [cn 50 km]
+  control 2025-05-26 Aeropuerto de Rivera     motor 0    48   49 dBZ  antes  32  [sg 195 km]
+  control 2025-08-18 Aeropuerto de Rivera     motor 0    36   44 dBZ  [cn 276 km, sg 195 km]
+  control 2025-08-19 Aeropuerto de Rivera     motor 0    47   48 dBZ  antes  42  [cn 276 km, sg 195 km]
+  control 2025-08-22 Porto Alegre (RS)        motor 0   nan  nan dBZ  [sin radar]
+  control 2025-09-30 Santo Ângelo (RS)        motor 1    48   51 dBZ  antes  36  [sg 129 km]
+  control 2025-10-16 Santa Maria (RS)         motor 1    44   49 dBZ  antes  23  [cn 211 km, sg 132 km]
+  control 2025-11-04 Aeropuerto de Rivera     motor 1    33   44 dBZ  antes  44  [cn 276 km, sg 195 km]
+  control 2025-11-16 Aeropuerto de Rivera     motor 1    47   47 dBZ  antes  28  [cn 276 km, sg 195 km]
+  control 2025-12-01 Aeropuerto de Rivera     motor 1    48   48 dBZ  antes  -1  [cn 276 km, sg 195 km]
+  control 2025-12-24 Aeropuerto de Rivera     motor 0    61   61 dBZ  antes  -1  [sg 195 km, cn 276 km]
+  control 2026-01-16 Porto Alegre (RS)        motor 0    26   29 dBZ  antes  16  [cn 214 km]
+  control 2026-02-19 Aeropuerto de Rivera     motor 0    36   39 dBZ  antes  14  [cn 276 km, sg 195 km]
+  control 2026-02-24 Aeropuerto de Rivera     motor 0    42   42 dBZ  antes  26  [sg 195 km, cn 276 km]
+  control 2026-02-24 Pelotas (RS)             motor 0    49   50 dBZ  antes  34  [cn 50 km]
+  control 2026-03-18 Porto Alegre (RS)        motor 0   nan  nan dBZ  [sin radar]
+  control 2026-03-21 Porto Alegre (RS)        motor 0   nan  nan dBZ  [sin radar]
+  control 2026-05-07 Rivera                   motor 0    35   36 dBZ  antes  17  [sg 195 km]
+  control 2026-05-07 Tacuarembó               motor 1    28   29 dBZ  [sg 294 km]
+  control 2026-07-20 Pelotas (RS)             motor —    48   50 dBZ  [cn 50 km]
+  control 2026-08-13 Porto Alegre (RS)        motor —   nan  nan dBZ  [sin radar]
+  control 2026-09-29 Santa Maria (RS)         motor —    37   40 dBZ  antes  35  [cn 211 km, sg 132 km]

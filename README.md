@@ -15,13 +15,11 @@ Asistente de decisión sobre granizo para el auto: *¿lo puedo dejar afuera o co
 
 La única forma de saber cuánto rinde el motor con pronósticos reales (y no con casi-análisis) es guardarlos todos los días y cruzarlos después con las granizadas. El workflow [`registro-pronosticos.yml`](.github/workflows/registro-pronosticos.yml) corre a diario a las 16:30 (hora de Uruguay), guarda la corrida de las 12 UTC de GFS y ECMWF para 16 ciudades y 4 ventanas (esta noche, mañana, mañana a la noche y pasado mañana) y reconstruye de a poco los días desde abril de 2026, que es cuando la Single Runs API de Open-Meteo empezó a archivar GFS. Los datos quedan en `data/forecast-log/runs/AAAA-MM.jsonl`; cada línea trae el nivel, la anticipación en horas y los ingredientes de cada modelo. Los commits de datos no vuelven a publicar el sitio.
 
-## Ahora: rayos, lluvia y radar
+## Ahora: rayos cerca
 
-El workflow [`nowcast.yml`](.github/workflows/nowcast.yml) corre cada 10 minutos y publica `latest.json` en la rama `nowcast` (un solo commit que se reemplaza); la app lo lee de `https://raw.githubusercontent.com/<dueño>/granizo/nowcast/latest.json` (`NOWCAST.url` en `src/engine/config.ts`). Con él muestra el aviso **"Tormenta eléctrica cerca: cubrilo ahora"** cuando el motor ve ambiente de granizo y hay 3 rayos o más a menos de 20 km en la última media hora (calibración en [`scripts/research/nowcast/`](scripts/research/nowcast/) y en [`docs/como-lo-probamos.md`](docs/como-lo-probamos.md)). Junta lo que está pasando en Uruguay y ~80 km alrededor:
+El workflow [`nowcast.yml`](.github/workflows/nowcast.yml) corre cada 10 minutos y publica `latest.json` en la rama `nowcast` (un solo commit que se reemplaza). Trae los rayos del GOES-19 (GLM, datos públicos de NOAA, sin claves) de la última media hora en Uruguay y ~80 km alrededor, por celda de 0,1° y en tramos de 10 minutos (~1 kB). La app lo lee de `https://raw.githubusercontent.com/<dueño>/granizo/nowcast/latest.json` (`NOWCAST.url` en `src/engine/config.ts`).
 
-- **Rayos** del GOES-19 (GLM) en los últimos 30 min: por celda de 0,1° en tramos de 10 min y, por ciudad, a ≤ 30 y ≤ 50 km, con el "lightning jump".
-- **Lluvia estimada por satélite** (NOAA RRQPE): máximo en mm/h por celda y por ciudad. No es radar: ve los núcleos de tormenta, no la lluvia débil.
-- **Radar** de REDEMET (Brasil), Santiago y Canguçu: ven el norte y el noreste del país. Necesita el secreto `REDEMET_API_KEY`; las imágenes son públicas y la app las carga directo. Si el radar no tiene imágenes de la última hora, el JSON lo marca como `sin datos`.
+Con él muestra **"Tormenta eléctrica cerca: cubrilo ahora"** cuando el motor ve "Algunas chances" o más y hay 3 rayos o más a menos de 20 km. Si no, informa la tormenta si está a menos de 50 km. Los rayos no dicen si va a granizar (eso lo dice el motor): dicen **cuándo**. En la prueba estaba prendido al llegar el granizo en 12 de 15 granizadas con hora. Con los pronósticos reales guardados, en casi la mitad de las ventanas con "Algunas chances" la tormenta no llegó y el aviso no saltó. Detalle en [`scripts/research/nowcast/`](scripts/research/nowcast/), con lo que se probó y quedó afuera (lluvia por satélite y radar de REDEMET).
 
 `python3 scripts/nowcast/build.py salida.json` lo arma a mano (`pip install -r scripts/nowcast/requirements.txt`).
 
@@ -65,7 +63,7 @@ npm run typecheck
 5. **Dos modelos**: protect solo si GFS **y** ECMWF dicen protect; watch si alguno dice protect o los dos dicen al menos watch.
 6. **Confianza**: baja en oct–mar (en el test el ambiente no distinguió granizo de lluvia en verano); en abr–sep, media si los modelos coinciden y baja si no.
 7. **Razones y textos** desde plantillas (`src/engine/messages.ts`). Los nombres visibles de los niveles están a definir en diseño.
-8. **Ahora**: con los rayos del GOES-19 de la última media hora (`src/nowcast.ts`), si el nivel es "Algunas chances" o más y hay 3 rayos o más a ≤ 20 km, la app avisa "cubrilo ahora".
+8. **Ahora**: con los rayos del GOES-19 de la última media hora (`src/nowcast.ts`), si el nivel es "Algunas chances" o más y hay 3 rayos o más a ≤ 20 km, la app avisa "cubrilo ahora". No cambia el nivel: marca el momento.
 
 Habilidad estimada **fuera de muestra** (2025–2026, en días de tormenta): "Chances reales" detecta el **43%** de las granizadas con **15%** de falsas alarmas (57% y 19% en abr–sep; nada en oct–mar). "Algunas chances" o más detecta el 82% con 38% de falsas alarmas (con el umbral anterior, 93% y 65%). Son datos casi de análisis: el pronóstico real del día anterior va a rendir algo menos. Detalle en [`docs/como-lo-probamos.md`](docs/como-lo-probamos.md).
 

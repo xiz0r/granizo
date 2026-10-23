@@ -8,7 +8,7 @@ Cubierto responde una pregunta concreta: **¿conviene proteger el auto del grani
 - Mira el pronóstico de **dos modelos globales** (GFS y ECMWF) sobre una zona de unos 40 km alrededor del lugar elegido.
 - Distingue tres niveles, según las chances de granizo: **Muy pocas chances**, **Algunas chances** y **Chances reales**. Si hay tormenta sin ambiente de granizo, el nivel es "Muy pocas chances" y la app avisa la tormenta aparte.
 - Fue probado contra **140 casos históricos** de Uruguay (2021–2026). El nivel "Chances reales" avisó en alrededor de **4 de cada 10 granizadas** y se equivocó en alrededor de **15 de cada 100 días de tormenta sin granizo**.
-- Además del pronóstico, mira los **rayos del satélite GOES-19** cada 10 minutos. Si el motor ve ambiente de granizo y hay una tormenta eléctrica a menos de 20 km, avisa **"cubrilo ahora"**. En la prueba con rayos de antes del granizo, ese aviso saltó en 8 de 13 granizadas y en 7 de 63 tormentas sin granizo, entre 20 y 90 minutos antes.
+- Además del pronóstico, mira los **rayos del satélite GOES-19** cada 10 minutos. Si el motor ve ambiente de granizo y hay una tormenta eléctrica a menos de 20 km, avisa **"cubrilo ahora"**. Los rayos no cambian las chances de granizo, marcan el momento: el aviso estaba prendido al llegar el granizo en 12 de 15 granizadas con hora. Con los pronósticos reales guardados, en casi la mitad de los días con "Algunas chances" la tormenta no llegó y el aviso no saltó.
 - Es una herramienta de **decisión orientativa**. No reemplaza los avisos oficiales de INUMET.
 
 ## Qué datos usa
@@ -134,32 +134,39 @@ En días de tormenta de abril a septiembre, el motor puede indicar "hoy no es de
 
 El pronóstico dice si el día tiene ambiente de granizo, pero no si una tormenta se formó ni hacia dónde va. Para eso la app mira los rayos del satélite GOES-19 (instrumento GLM). Un workflow de GitHub (`.github/workflows/nowcast.yml`) los junta cada 10 minutos y publica un JSON que la app lee junto con el pronóstico.
 
-Los rayos solos no distinguen granizo: entre tormentas eléctricamente fuertes, un aumento brusco de rayos se dio casi igual con y sin granizo (10 de 10 contra 16 de 18). Por eso no cambian el nivel. Lo que hacen es marcar **cuándo** actuar en un día que el motor ya marcó:
-
 | Aviso | Condición |
 |---|---|
 | **Tormenta eléctrica cerca: cubrilo ahora** | El motor dice "Algunas chances" o más para hoy **y** hubo 3 rayos o más a menos de 20 km en la última media hora de datos. |
 | **Tormenta eléctrica** (informativo) | Hay rayos a menos de 50 km, sin la condición anterior. |
 
-Se calibró con los 76 casos con hora (13 granizadas y 63 tormentas sin granizo), **usando solo los rayos de antes del granizo**: los de la media hora que termina 20 minutos antes, que es lo viejos que llegan los datos a la app. Los METAR que informan granizo "en la hora previa" se corrieron 30 minutos hacia atrás.
+Todas las pruebas usan solo lo que la app sabría **antes** del granizo: los rayos de la media hora que termina 20 minutos antes, que es lo viejos que llegan los datos.
 
-| Criterio | Detección | Falsas alarmas |
-|---|---|---|
-| Motor solo, "Algunas chances" o más | 10 de 13 | 20 de 63 (32%) |
-| Motor solo, "Chances reales" | 6 de 13 | 6 de 63 (10%) |
-| **Aviso "cubrilo ahora"** | **8 de 13** | **7 de 63 (11%)** |
+**Los rayos no distinguen granizo.** En los días en que una tormenta pasa por el lugar, hay rayos cerca casi siempre, con o sin granizo. En 85 días de tormenta con "Algunas chances" o más, el aviso saltó en algún momento en 45 de 46 días con granizo y en 36 de 39 sin granizo (en estos, prendido unas 3 horas). Por eso no cambian el nivel: las chances de granizo las da el motor.
 
-- El aviso habría aparecido entre 21 y 87 minutos antes del granizo (mediana de unos 50).
-- Con validación cruzada (elegir radio y cantidad sin la fecha que se prueba), detecta 54–62% con 13–16% de falsas alarmas.
-- Radio y cantidad se eligieron mirando estos mismos casos, que son pocos: se consideran provisorios hasta medirlos hacia adelante.
-- De las 5 granizadas que no avisó, en 3 el motor no había visto ambiente de granizo; en las otras 2, la tormenta llegó sin rayos cerca en esa media hora.
-- El JSON también trae la lluvia estimada por satélite y las imágenes de dos radares brasileños (REDEMET, Santiago y Canguçu), que cubren solo el norte y el noreste. Todavía no entran en el aviso: no hay casos suficientes para calibrarlos.
+**Lo que aportan es el momento.**
+
+| Prueba | Resultado |
+|---|---|
+| Granizadas con hora (Uruguay y sur de Brasil, 15) | El aviso estaba prendido al llegar el granizo en 12; en 8, con 10 minutos o más de anticipación (mediana 45 min). |
+| Pronósticos reales guardados (abril–octubre de 2026) | Con "Algunas chances", la tormenta llegó a menos de 20 km en 49 de 89 ventanas de 12 horas (55%). En las otras 40 el aviso no saltó. Con "Chances reales", en 15 de 21. |
+| Media hora antes del granizo, Uruguay (donde se eligieron radio y cantidad) | 8 de 13 granizadas; 7 de 63 tormentas sin granizo a la misma hora. |
+| Media hora antes, aeropuertos del sur de Brasil (prueba independiente, sin reajustar) | 4 de 9 granizadas; 6 de 44 tormentas sin granizo. |
+
+En la práctica: un día con "Algunas chances", la app no pide tener el auto cubierto todo el día. Avisa cuando la tormenta está cerca, y muchas veces no llega.
+
+**Lo que se probó y quedó afuera** (detalle en `scripts/research/nowcast/README.md`):
+
+- **Lluvia estimada por satélite** (NOAA RRQPE), en 145 casos: cuando ya hay rayos cerca no suma nada.
+- **Radar de REDEMET** (Santiago y Canguçu, en Brasil), con las imágenes pasadas a dBZ, en 30 días con granizo y 62 sin granizo:
+  - ve el granizo, pero también muchas tormentas fuertes sin granizo (≥ 50 dBZ a menos de 20 km en 24 de 30 contra 21 de 62);
+  - con la demora con que llegan las imágenes, lo ve antes del granizo en apenas 5 de 15 casos;
+  - cubre solo el norte y el este del país y tiene cortes.
 
 ## Cómo seguir mejorando
 
 - Medir el desempeño con pronósticos reales a 12–60 horas. Cada día se guarda la salida del motor sobre la corrida de las 12 UTC de los dos modelos (más una reconstrucción desde abril de 2026), para cruzarla después con las granizadas de la temporada.
 - Reunir más casos de verano con hora conocida.
-- Sumar observaciones en tiempo real para la estación cálida: los rayos ya están; faltan radares sobre Uruguay (INUMET prevé dos para 2027).
+- Sumar observaciones en tiempo real para la estación cálida: los rayos ya están; faltan radares sobre Uruguay (INUMET prevé dos para 2027). Con datos en dBZ y sin la demora de las imágenes de REDEMET, vale la pena repetir la prueba del radar (`scripts/research/nowcast/`).
 
 ## Reproducibilidad
 
@@ -169,6 +176,7 @@ Todo el código, los datos de la prueba y los reportes están en este repositori
 - `data/events.json` — granizadas y controles usados en la prueba
 - `reports/backtest.md` y `reports/calibration.md` — resultados completos
 - `npm run backtest` y `npm run calibrate` — repiten la evaluación
-- `scripts/research/nowcast/` — calibración del aviso "Ahora" con rayos
+- `scripts/research/nowcast/` — calibración y pruebas del aviso "Ahora" (rayos), y de la lluvia por satélite y el radar que quedaron afuera
+- `scripts/research/motor-24h/` — los cambios al motor que se probaron y no mejoraron v0.2.1
 
 Para el detalle cronológico de cómo se llegó a estos números, ver [`bitacora-motor.md`](bitacora-motor.md).

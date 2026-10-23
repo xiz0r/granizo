@@ -1,10 +1,9 @@
-name: Ahora (rayos, lluvia y radar)
+name: Ahora (rayos)
 
-# Cada 10 minutos arma latest.json con lo que está pasando cerca de Uruguay: rayos (GOES-19 GLM), lluvia estimada por
-# satélite (NOAA) y radar (REDEMET: Santiago y Canguçu). Ver scripts/nowcast/build.py.
+# Cada 10 minutos arma latest.json con los rayos de la última media hora cerca de Uruguay (GOES-19 GLM, datos públicos
+# de NOAA, sin claves). Ver scripts/nowcast/build.py.
 # Se publica en la rama `nowcast` como un único commit que se reemplaza en cada corrida (no crece el historial ni
 # vuelve a publicar el sitio). La app lo lee de https://raw.githubusercontent.com/<dueño>/granizo/nowcast/latest.json
-# Secreto REDEMET_API_KEY (Settings → Secrets and variables → Actions); sin él, el JSON sale sin radar.
 on:
   schedule:
     - cron: '3-59/10 * * * *' # minutos 3, 13, 23…: lejos de la hora en punto, cuando GitHub más demora los cron
@@ -30,8 +29,6 @@ jobs:
           cache-dependency-path: scripts/nowcast/requirements.txt
       - run: pip install -r scripts/nowcast/requirements.txt
       - name: Armar el JSON
-        env:
-          REDEMET_API_KEY: ${{ secrets.REDEMET_API_KEY }}
         run: python3 scripts/nowcast/build.py "$RUNNER_TEMP/latest.json"
       - name: Publicar en la rama nowcast
         run: |

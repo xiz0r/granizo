@@ -1,7 +1,7 @@
 """Rayos del GOES (GLM) a ≤ 100 km de cada caso con hora, de t−120 a t+30 min (UTC = hora local + 3 h).
 Mismos casos que scripts/glm/glm_batch.py (con hora; sin granizo chico). Un CSV por caso: minutos respecto de la hora
 reportada (negativo = antes), lat, lon, distancia en km y energía (fJ). Reanudable; ~40 min y ~8 GB de descarga.
-Uso: python3 glm_cases.py [salida=.cache/research-nowcast/glm]"""
+Uso: python3 glm_cases.py [salida=.cache/research-nowcast/glm] [casos=data/events.json]"""
 import csv
 import io
 import json
@@ -18,8 +18,6 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[3]
 events = json.loads((ROOT / "data/events.json").read_text())
-out = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / ".cache/research-nowcast/glm"
-out.mkdir(parents=True, exist_ok=True)
 G19 = datetime(2025, 4, 7)
 BEFORE, AFTER, RADIUS = 120, 30, 100
 
@@ -65,27 +63,32 @@ def flashes(bucket, key, lat0, lon0, t0):
     return [(round(m, 2), round(a, 4), round(b, 4), round(c, 2), round(e * 1e15, 2)) for a, b, c, e in zip(lat[d <= RADIUS], lon[d <= RADIUS], d[d <= RADIUS], en[d <= RADIUS])]
 
 
-cases = [e for e in events if e["localTime"] and not (e["type"] == "hail" and e["damaging"] is False)]
-print(len(cases), "casos", flush=True)
-for e in cases:
-    path = out / f"{e['id']}.csv"
-    if path.exists():
-        continue
-    t0 = datetime.fromisoformat(f"{e['date']}T{e['localTime']}") + timedelta(hours=3)
-    start, end = t0 - timedelta(minutes=BEFORE), t0 + timedelta(minutes=AFTER)
-    bucket = "noaa-goes19" if t0 >= G19 else "noaa-goes16"
-    keys, hour = [], start.replace(minute=0, second=0)
-    while hour <= end:
-        keys += [k for k in keys_for(bucket, hour) if start <= start_of(k) < end]
-        hour += timedelta(hours=1)
-    with ThreadPoolExecutor(max_workers=24) as pool:
-        res = list(pool.map(lambda k: flashes(bucket, k, e["lat"], e["lon"], t0), keys))
-    missing = sum(r is None for r in res)
-    rows = [row for r in res if r for row in r]
-    with path.open("w", newline="") as fh:
-        w = csv.writer(fh)
-        w.writerow(["min", "lat", "lon", "km", "energy_fJ"])
-        w.writerows(sorted(rows))
-    (out / f"{e['id']}.meta.json").write_text(json.dumps({"files": len(keys), "missing": missing, "bucket": bucket, "t0_utc": t0.isoformat()}))
-    print(e["id"], len(keys), "archivos,", missing, "faltan,", len(rows), "rayos", flush=True)
-print("LISTO", flush=True)
+if __name__ == "__main__":
+    out = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / ".cache/research-nowcast/glm"
+    out.mkdir(parents=True, exist_ok=True)
+    if len(sys.argv) > 2:
+        events = json.loads(Path(sys.argv[2]).read_text())
+    cases = [e for e in events if e["localTime"] and not (e["type"] == "hail" and e["damaging"] is False)]
+    print(len(cases), "casos", flush=True)
+    for e in cases:
+        path = out / f"{e['id']}.csv"
+        if path.exists():
+            continue
+        t0 = datetime.fromisoformat(f"{e['date']}T{e['localTime']}") + timedelta(hours=3)
+        start, end = t0 - timedelta(minutes=BEFORE), t0 + timedelta(minutes=AFTER)
+        bucket = "noaa-goes19" if t0 >= G19 else "noaa-goes16"
+        keys, hour = [], start.replace(minute=0, second=0)
+        while hour <= end:
+            keys += [k for k in keys_for(bucket, hour) if start <= start_of(k) < end]
+            hour += timedelta(hours=1)
+        with ThreadPoolExecutor(max_workers=24) as pool:
+            res = list(pool.map(lambda k: flashes(bucket, k, e["lat"], e["lon"], t0), keys))
+        missing = sum(r is None for r in res)
+        rows = [row for r in res if r for row in r]
+        with path.open("w", newline="") as fh:
+            w = csv.writer(fh)
+            w.writerow(["min", "lat", "lon", "km", "energy_fJ"])
+            w.writerows(sorted(rows))
+        (out / f"{e['id']}.meta.json").write_text(json.dumps({"files": len(keys), "missing": missing, "bucket": bucket, "t0_utc": t0.isoformat()}))
+        print(e["id"], len(keys), "archivos,", missing, "faltan,", len(rows), "rayos", flush=True)
+    print("LISTO", flush=True)

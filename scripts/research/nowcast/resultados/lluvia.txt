@@ -1,0 +1,8 @@
+Todos los casos con hora: 25 granizadas, 120 sin granizo   AUC lluvia 0.67
+    ≥1 mm/h: 23/25 vs 103/120   ≥5 mm/h: 21/25 vs 91/120   ≥10 mm/h: 21/25 vs 72/120   ≥20 mm/h: 13/25 vs 32/120   ≥30 mm/h: 8/25 vs 23/120   ≥50 mm/h: 0/25 vs 3/120
+Motor ≥ "Algunas chances": 14 granizadas, 33 sin granizo   AUC lluvia 0.63
+    ≥1 mm/h: 13/14 vs 29/33   ≥5 mm/h: 13/14 vs 25/33   ≥10 mm/h: 13/14 vs 21/33   ≥20 mm/h: 7/14 vs 13/33   ≥30 mm/h: 5/14 vs 9/33   ≥50 mm/h: 0/14 vs 2/33
+Motor ≥ "Algunas chances" y ≥ 3 rayos a ≤ 20 km (ya saltó el aviso): 12 granizadas, 13 sin granizo   AUC lluvia 0.47
+    ≥1 mm/h: 12/12 vs 13/13   ≥5 mm/h: 12/12 vs 13/13   ≥10 mm/h: 12/12 vs 12/13   ≥20 mm/h: 7/12 vs 8/13   ≥30 mm/h: 5/12 vs 6/13   ≥50 mm/h: 0/12 vs 2/13
+Con ≥ 3 rayos a ≤ 20 km, sin mirar el motor: 21 granizadas, 49 sin granizo   AUC lluvia 0.55
+    ≥1 mm/h: 20/21 vs 49/49   ≥5 mm/h: 18/21 vs 47/49   ≥10 mm/h: 18/21 vs 40/49   ≥20 mm/h: 12/21 vs 22/49   ≥30 mm/h: 8/21 vs 17/49   ≥50 mm/h: 0/21 vs 3/49

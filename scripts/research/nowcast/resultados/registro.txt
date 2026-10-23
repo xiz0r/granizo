@@ -1,0 +1,14 @@
+126 ventanas con "Algunas chances" o más; 414 horas de rayos
+(horas sin datos completos: 44; 9 todavía no pasaron, el resto son cortes del GLM)
+
+"Algunas chances": 89 ventanas de 12 h; el aviso habría saltado en 49 (55%)
+    tonight         19/29
+    tomorrow        13/37
+    tomorrow_night  17/23
+"Chances reales": 21 ventanas de 12 h; el aviso habría saltado en 15 (71%)
+    tonight         4/5
+    tomorrow        5/10
+    tomorrow_night  6/6
+
+Granizadas desde abril de 2026 a ≤ 40 km de una ciudad del registro (ventana que la contiene):
+  ninguna: las granizadas de 2026 fueron lejos de las 4 ciudades que el registro sigue desde abril (las otras 12 entraron en octubre)

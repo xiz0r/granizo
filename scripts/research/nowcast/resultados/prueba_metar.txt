@@ -1,0 +1,46 @@
+Aeropuertos del sur de Brasil y Melo: 16 granizadas y 64 tormentas sin granizo con rayos; 9 y 44 con nivel del motor (el archivo de Open-Meteo empieza en 2021-03)
+
+Datos de 10 min (rayos de la media hora que termina 10 min antes):
+  motor "Algunas chances" o más, solo                        detecta  5/9 ( 56%)   falsas alarmas 13/44 ( 30%)   TSS +0.26
+  motor "Chances reales", solo                               detecta  4/9 ( 44%)   falsas alarmas  1/44 (  2%)   TSS +0.42
+  ≥3 rayos a ≤20 km, sin motor (todos los casos)             detecta 16/16 (100%)   falsas alarmas 46/64 ( 72%)   TSS +0.28
+  ≥3 rayos a ≤20 km, sin motor (casos con nivel)             detecta  9/9 (100%)   falsas alarmas 28/44 ( 64%)   TSS +0.36
+  el aviso de la app: "Algunas chances" o más + ≥3 rayos a ≤20 km detecta  5/9 ( 56%)   falsas alarmas  8/44 ( 18%)   TSS +0.37
+  "Chances reales" + ≥3 rayos a ≤20 km                       detecta  4/9 ( 44%)   falsas alarmas  1/44 (  2%)   TSS +0.42
+
+Datos de 20 min (rayos de la media hora que termina 20 min antes):
+  motor "Algunas chances" o más, solo                        detecta  5/9 ( 56%)   falsas alarmas 13/44 ( 30%)   TSS +0.26
+  motor "Chances reales", solo                               detecta  4/9 ( 44%)   falsas alarmas  1/44 (  2%)   TSS +0.42
+  ≥3 rayos a ≤20 km, sin motor (todos los casos)             detecta 14/16 ( 88%)   falsas alarmas 35/64 ( 55%)   TSS +0.33
+  ≥3 rayos a ≤20 km, sin motor (casos con nivel)             detecta  7/9 ( 78%)   falsas alarmas 20/44 ( 45%)   TSS +0.32
+  el aviso de la app: "Algunas chances" o más + ≥3 rayos a ≤20 km detecta  4/9 ( 44%)   falsas alarmas  6/44 ( 14%)   TSS +0.31
+  "Chances reales" + ≥3 rayos a ≤20 km                       detecta  3/9 ( 33%)   falsas alarmas  1/44 (  2%)   TSS +0.31
+
+Uruguay (events.json) + sur de Brasil, datos de 20 min:
+  motor "Algunas chances" o más, solo                        detecta 15/22 ( 68%)   falsas alarmas 33/107 ( 31%)   TSS +0.37
+  motor "Chances reales", solo                               detecta 10/22 ( 45%)   falsas alarmas  7/107 (  7%)   TSS +0.39
+  el aviso de la app                                         detecta 12/22 ( 55%)   falsas alarmas 13/107 ( 12%)   TSS +0.42
+  tabla con motor ≥ "Algunas chances" (detecta/falsas):
+    ≤10 km: ≥1 rayos 11/11   ≥3 rayos 8/7   ≥10 rayos 5/4   ≥30 rayos 4/3
+    ≤20 km: ≥1 rayos 13/15   ≥3 rayos 12/13   ≥10 rayos 9/10   ≥30 rayos 7/4
+    ≤30 km: ≥1 rayos 13/24   ≥3 rayos 12/19   ≥10 rayos 12/14   ≥30 rayos 10/11
+    ≤50 km: ≥1 rayos 14/29   ≥3 rayos 13/27   ≥10 rayos 12/26   ≥30 rayos 12/21
+  (22 granizadas, 107 sin granizo)
+
+Granizadas del sur de Brasil y Melo (motor: 0 muy pocas, 1 algunas, 2 reales, — sin dato):
+  2018-09-24 10:00 Santo Ângelo (RS)      motor —  rayos ≤20 km en la media hora (datos de 20 min):  251  primer disparo: 69 min antes
+  2018-12-14 15:30 Canoas (RS)            motor —  rayos ≤20 km en la media hora (datos de 20 min):  494  primer disparo: 45 min antes
+  2019-10-29 08:00 Pelotas (RS)           motor —  rayos ≤20 km en la media hora (datos de 20 min):   52  primer disparo: 73 min antes
+  2021-02-20 15:00 Pelotas (RS)           motor —  rayos ≤20 km en la media hora (datos de 20 min):   30  primer disparo: 31 min antes
+  2022-08-15 19:14 Porto Alegre (RS)      motor 2  rayos ≤20 km en la media hora (datos de 20 min):   16  primer disparo: 26 min antes
+  2023-03-20 14:35 Porto Alegre (RS)      motor 0  rayos ≤20 km en la media hora (datos de 20 min):  101  primer disparo: 86 min antes
+  2023-08-23 13:00 Porto Alegre (RS)      motor 2  rayos ≤20 km en la media hora (datos de 20 min):    0  primer disparo: 11 min antes
+  2023-09-26 06:00 Santa Maria (RS)       motor 0  rayos ≤20 km en la media hora (datos de 20 min):  629  primer disparo: 90 min antes
+  2023-10-16 07:07 Santa Maria (RS)       motor 1  rayos ≤20 km en la media hora (datos de 20 min):  128  primer disparo: 90 min antes
+  2024-01-16 22:04 Porto Alegre (RS)      motor 0  rayos ≤20 km en la media hora (datos de 20 min):  120  primer disparo: 48 min antes
+  2024-04-30 14:15 Bagé (RS)              motor 2  rayos ≤20 km en la media hora (datos de 20 min):    4  primer disparo: 24 min antes
+  2024-05-22 18:00 Pelotas (RS)           motor 0  rayos ≤20 km en la media hora (datos de 20 min):    1  primer disparo: 90 min antes
+  2026-07-18 10:00 Pelotas (RS)           motor 2  rayos ≤20 km en la media hora (datos de 20 min):   16  primer disparo: 77 min antes
+  2026-08-18 08:15 Pelotas (RS)           motor —  rayos ≤20 km en la media hora (datos de 20 min):   88  primer disparo: 90 min antes
+  2026-09-21 03:17 Porto Alegre (RS)      motor —  rayos ≤20 km en la media hora (datos de 20 min):    6  primer disparo: 20 min antes
+  2026-10-08 02:30 Melo (aeropuerto)      motor —  rayos ≤20 km en la media hora (datos de 20 min):  386  primer disparo: 53 min antes

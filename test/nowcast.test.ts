@@ -13,14 +13,9 @@ const NOW = Date.parse('2026-10-22T19:40:00Z');
 
 /** JSON como el de scripts/nowcast/build.py: celdas [lat, lon, rayos últimos 10 min, 10–20, 20–30]. */
 const doc = (cells: number[][], toUtc = '2026-10-22T19:27:36Z') => ({
-  version: 1,
+  version: 2,
   generatedUtc: '2026-10-22T19:28:36Z',
   lightning: { toUtc, grid: { cellDeg: 0.1, slotMin: 10, cells } },
-  rain: { validUtc: '2026-10-22T19:10:00Z', grid: { cellDeg: 0.1, minMmH: 1, cells: [[LAT, LON, 12.5], [LAT + 1, LON, 40]] } },
-  radar: [
-    { id: 'sg', name: 'Santiago/RS', status: 'ok', frames: [{ utc: '2026-10-22T19:16:24Z', png: 'https://x/sg.png', bounds: [-32.8, -25.6, -59.2, -50.8] }] },
-    { id: 'cn', name: 'Canguçu/RS', status: 'sin datos', frames: [] },
-  ],
 });
 
 test('cuenta los rayos a ≤ 20 km en la media hora y da la distancia a la celda más cercana', () => {
@@ -30,8 +25,6 @@ test('cuenta los rayos a ≤ 20 km en la media hora y da la distancia a la celda
   assert.equal(n.flashesLast10, 2);
   assert.equal(n.nearestKm, 11);
   assert.equal(n.ageMin, 12);
-  assert.equal(n.rainMaxMmH, 12.5);
-  assert.deepEqual(n.radar.map((r) => r.id), ['sg']);
 });
 
 test('sin rayos cerca: nada que informar; datos viejos o rotos: null', () => {

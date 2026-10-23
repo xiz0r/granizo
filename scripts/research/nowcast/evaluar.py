@@ -3,8 +3,7 @@
 Lee data/events.json, reports/backtest.csv (pico v0.2.0 por caso, combinado), reports/ecmwf-eval.json (pico de cada
 modelo desde 2024-06) y los rayos por caso de glm_cases.py. Sin red.
 
-- Nivel del motor (v0.2.1) por caso, a partir del pico guardado: "Chances reales" no cambió; "Algunas chances" pide
-  WMAXSHEAR ≥ 900 (o ambiente fuerte sin tormentas en el modelo); dos modelos con la regla "both".
+- Nivel del motor (v0.2.1) por caso: motor.py.
 - Solo cuenta lo que se sabía antes del granizo: los rayos de la media hora que termina `demora` minutos antes de la
   hora reportada (la app ve datos de 10–25 min: cron cada 10 min + demoras de GitHub + caché de 5 min).
 - Las granizadas que un METAR reporta "en la hora previa" (REGR, RETSGR…) se corren `corrimiento` minutos hacia atrás.
@@ -27,32 +26,7 @@ W = 30  # minutos de rayos que mira el aviso (los del JSON)
 RADII, COUNTS, DELAYS = (20, 30, 50), (1, 3, 10, 30), (10, 20)
 RULE = {"radius": 20, "flashes": 3}  # lo que usa src/engine/config.ts (NOWCAST)
 
-events = {e["id"]: e for e in json.loads((ROOT / "data/events.json").read_text())}
-backtest = {r["id"]: r for r in csv.DictReader(open(ROOT / "reports/backtest.csv"))}
-by_model = json.loads((ROOT / "reports/ecmwf-eval.json").read_text())
-num = lambda x: None if x in ("", "—", None) else float(x)
-
-
-def model_level(level, env, lapse, wmax):
-    if level == "protect":
-        return 2
-    if env == "strong" or (lapse is not None and wmax is not None and lapse >= 6.5 and wmax >= 900):
-        return 1
-    return 0
-
-
-def engine_level(cid):
-    if cid in by_model:
-        levels = [model_level(m["level"], m["env"], m["lapse"], m["wmax"]) for m in (by_model[cid].get("gfs_seamless"), by_model[cid].get("ecmwf_ifs025")) if m]
-        if len(levels) == 2:
-            a, b = levels
-            return 2 if a == 2 and b == 2 else 1 if (2 in levels or (a >= 1 and b >= 1)) else 0
-        return levels[0]
-    r = backtest[cid]
-    mu, shear = num(r["mucape"]), num(r["shear06"])
-    wmax = math.sqrt(2 * mu) * shear if mu is not None and shear is not None else None
-    return model_level(r["level"], r["environment"], num(r["lapse"]), wmax)
-
+from motor import backtest, by_model, engine_level, events  # noqa: E402,F401
 
 cases = []
 for cid, e in events.items():
