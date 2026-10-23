@@ -1,0 +1,30 @@
+1. POR DÍA (¿avisó en algún momento del día?)
+  Uruguay: 39 días con granizo, 70 días de tormenta sin granizo
+    hoy, "Algunas chances" o más   detecta 28/39 ( 72%)  falsas alarmas 24/70 ( 34%)  TSS +0.38
+    hoy, "Chances reales"          detecta 17/39 ( 44%)  falsas alarmas  7/70 ( 10%)  TSS +0.34
+    PR, "cubrilo ahora"            detecta 28/39 ( 72%)  falsas alarmas 21/70 ( 30%)  TSS +0.42
+    diferencia de TSS, PR − "Algunas chances": +0.04 (95%: +0.00 a +0.10)
+  Sur de Brasil: 9 días con granizo, 44 días de tormenta sin granizo
+    hoy, "Algunas chances" o más   detecta  5/9 ( 56%)  falsas alarmas 13/44 ( 30%)  TSS +0.26
+    hoy, "Chances reales"          detecta  4/9 ( 44%)  falsas alarmas  1/44 (  2%)  TSS +0.42
+    PR, "cubrilo ahora"            detecta  5/9 ( 56%)  falsas alarmas 13/44 ( 30%)  TSS +0.26
+    diferencia de TSS, PR − "Algunas chances": +0.00 (95%: +0.00 a +0.00)
+  Todos: 48 días con granizo, 114 días de tormenta sin granizo
+    hoy, "Algunas chances" o más   detecta 33/48 ( 69%)  falsas alarmas 37/114 ( 32%)  TSS +0.36
+    hoy, "Chances reales"          detecta 21/48 ( 44%)  falsas alarmas  8/114 (  7%)  TSS +0.37
+    PR, "cubrilo ahora"            detecta 33/48 ( 69%)  falsas alarmas 34/114 ( 30%)  TSS +0.39
+    diferencia de TSS, PR − "Algunas chances": +0.03 (95%: +0.00 a +0.06)
+
+2. POR HORA, en los 70 días con "Algunas chances" o más (33 con granizo, 37 sin granizo)
+  tira de horas de hoy   horas marcadas por día sin granizo: mediana  3.0 (media  4.1); por día con granizo: mediana  8.0
+  PR, "cubrilo ahora"    horas marcadas por día sin granizo: mediana  4.0 (media  4.4); por día con granizo: mediana  5.0
+  Granizadas con hora (15): la tira marcaba esa hora o la anterior en 12; el aviso estaba prendido en la hora previa en 11 (con ≥ 10 min de anticipación en 8)
+  Total de horas marcadas en esos 70 días: tira 474, aviso 377 (80% de las de la tira)
+    (95%: 65% a 97%)
+
+3. PRONÓSTICOS REALES GUARDADOS (registro_rayos.py): ventanas de 12 h con "Algunas chances": 89; con aviso: 49 (55%).
+  Sin aviso: 40 de 89 (45%; 95%: 35% a 55%). Si el aviso conserva el 100% de las granizadas que marca "Algunas chances" (punto 1), la chance de que granice cuando la app pide actuar se multiplica por ~1.8.
+
+4. PRONÓSTICO REAL DEL DÍA ANTERIOR (2026), días con "Algunas chances" o más y rayos bajados
+  14 días con granizo: horas de la tira 240 (mediana 18), horas de aviso 130 (mediana 8); días con aviso 13
+  3 días sin granizo: horas de la tira 13 (mediana 4), horas de aviso 19 (mediana 5); días con aviso 3

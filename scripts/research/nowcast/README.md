@@ -18,8 +18,9 @@ Solo cuenta lo que la app sabría **antes** del granizo: los rayos de la media h
 | Media hora antes, sur de Brasil (independiente) | `prueba_metar.py` | 4 de 9 granizadas, 6 de 44 tormentas sin granizo |
 | Todo el día, 85 días de tormenta con "Algunas chances" o más | `evaluar_dia.py` | Saltó en 45 de 46 días con granizo y en 36 de 39 sin granizo (mediana 3 h prendido). Prendido al llegar el granizo en 12 de 15; con ≥ 10 min de anticipación en 8 (mediana 45 min) |
 | Pronósticos reales guardados (abril–octubre de 2026) | `registro_rayos.py` | Saltó en 49 de 89 ventanas de 12 h con "Algunas chances" (55%) y en 15 de 21 con "Chances reales" (71%) |
+| App de hoy (nivel y tira de horas) contra el PR, mismos casos | `horas_motor.ts`, `horas_motor_real.ts`, `comparar_app.py` | Por día, TSS +0,36 → +0,39 (diferencia +0,03; 95%: 0 a +0,06). En el momento del granizo, contra la tira de horas: 55%/14% → 55%/12%. Con el pronóstico real del día anterior, en 14 días con granizo la tira marca 240 horas y el aviso 130, y el aviso salta en 13 de esos 14 días |
 
-**Lectura.** Los rayos cerca no distinguen una tormenta con granizo de una sin granizo: en los días en que la tormenta pasa por el lugar, el aviso salta casi siempre. Lo que aporta es **cuándo**: en un día marcado por el motor, avisa cuando la tormenta está a menos de 20 km, y en casi la mitad de los días con "Algunas chances" la tormenta nunca llega y el aviso no salta. La probabilidad de granizo la sigue dando el motor.
+**Lectura.** El acierto (granizo contra tormenta sin granizo) casi no cambia. Los rayos cerca no distinguen una tormenta con granizo de una sin granizo: en los días en que la tormenta pasa por el lugar, el aviso salta casi siempre. Lo que aporta es **cuándo**: en un día marcado por el motor, avisa cuando la tormenta está a menos de 20 km, y en casi la mitad de los días con "Algunas chances" la tormenta nunca llega y el aviso no salta. La probabilidad de granizo la sigue dando el motor.
 
 Variantes cercanas (25–30 km, 10 rayos, 30–40 km con más rayos) dan casi lo mismo; no hay razón para moverse de 20 km y 3 rayos.
 
