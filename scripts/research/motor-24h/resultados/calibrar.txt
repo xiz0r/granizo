@@ -1,0 +1,27 @@
+
+=== Archivo histórico (casi análisis), validación dejando un año afuera: 109 casos (39 granizo, 70 controles) ===
+  Chances reales:
+    v0.2.1 (actual)                            detecta  17/39 ( 44%)  falsas   7/70 ( 10%)  TSS +0.34
+    v0.2.1 con disparo a ±3 h del ambiente     detecta  15/39 ( 38%)  falsas   6/70 (  9%)  TSS +0.30
+    puntaje continuo, mismas falsas alarmas    detecta  15/39 ( 38%)  falsas  10/70 ( 14%)  TSS +0.24
+  Algunas chances o más:
+    v0.2.1 (actual)                            detecta  28/39 ( 72%)  falsas  24/70 ( 34%)  TSS +0.38
+    v0.2.1 con disparo a ±3 h del ambiente     detecta  28/39 ( 72%)  falsas  23/70 ( 33%)  TSS +0.39
+    puntaje continuo, mismas falsas alarmas    detecta  30/39 ( 77%)  falsas  25/70 ( 36%)  TSS +0.41
+  AUC: v0.2.1 (3 niveles) 0.73 · puntaje continuo 0.70
+  estación fría: n=22/25  AUC v0.2.1 0.82 · puntaje 0.81 · Chances reales v0.2.1 59%/12%
+  estación cálida: n=17/45  AUC v0.2.1 0.61 · puntaje 0.60 · Chances reales v0.2.1 24%/9%
+
+=== Pronóstico real del día anterior (12 UTC), reglas entrenadas con el histórico sin el año del caso: 22 casos (16 granizo, 6 controles) ===
+  Chances reales:
+    v0.2.1 (actual)                            detecta   8/16 ( 50%)  falsas   2/6 ( 33%)  TSS +0.17
+    v0.2.1 con disparo a ±3 h del ambiente     detecta   7/16 ( 44%)  falsas   2/6 ( 33%)  TSS +0.10
+    puntaje continuo, mismas falsas alarmas    detecta  11/16 ( 69%)  falsas   2/6 ( 33%)  TSS +0.35
+  Algunas chances o más:
+    v0.2.1 (actual)                            detecta  14/16 ( 88%)  falsas   3/6 ( 50%)  TSS +0.38
+    v0.2.1 con disparo a ±3 h del ambiente     detecta  14/16 ( 88%)  falsas   3/6 ( 50%)  TSS +0.38
+    puntaje continuo, mismas falsas alarmas    detecta  16/16 (100%)  falsas   5/6 ( 83%)  TSS +0.17
+  AUC: v0.2.1 (3 niveles) 0.67 · puntaje continuo 0.81
+  estación fría: n=16/6  AUC v0.2.1 0.67 · puntaje 0.81 · Chances reales v0.2.1 50%/33%
+  solo gfs_seamless: Chances reales 10/16 · 3/6 falsas | Algunas+ 15/16 · 3/6
+  solo ecmwf_ifs025: Chances reales 10/16 · 2/6 falsas | Algunas+ 15/16 · 3/6
